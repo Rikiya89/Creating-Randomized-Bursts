@@ -1,0 +1,47 @@
+#include "ofApp.h"
+
+//--------------------------------------------------------------
+void ofApp::setup(){
+    ofSetFrameRate(60);
+
+    ofSetBackgroundAuto(false);
+    //We still want to draw on a black background, so we need to draw
+    //the background before we do anything with brush
+
+    ofBackground(0);
+}
+
+//--------------------------------------------------------------
+void ofApp::update(){
+
+}
+
+//--------------------------------------------------------------
+void ofApp::draw(){if(ofGetMousePressed(OF_MOUSE_BUTTON_LEFT)){
+
+    ofSetRectMode(OF_RECTMODE_CENTER);
+    int numRects = 10;
+    for (int r=0; r<numRects; r++){
+        ofSetColor(ofRandom(50,255));
+        float width = ofRandom(5, 20);
+        float height = ofRandom(5, 20);
+        float distance = ofRandom(35);
+        // Formula for converting forom polar to Cartesian coordinates:
+        // x = cos(polar angle) * (polar distance)
+        // y = sin(polar angle) * (polar distance)
+
+        //We need our angle to be in radians if we want to use sin() or cos()
+        //so we can make use of an openFramworks function to convert from degrees
+        // to radians
+        float angle = ofRandom(ofDegToRad(360.0));
+
+        float xOffset = cos(angle) * distance;
+        float yOffset = sin(angle) * distance;
+        ofDrawRectangle(ofGetMouseX()+xOffset, ofGetMouseY()+yOffset,width, height);
+    }
+
+    if(ofGetMousePressed(OF_MOUSE_BUTTON_RIGHT)){
+        //If the right mouse button is pressed...
+        ofBackground(0);//draw a black background over the screen
+    }
+}
